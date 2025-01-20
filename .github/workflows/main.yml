@@ -35,6 +35,9 @@ jobs:
       contents: read
       actions: read
     steps:
+      - name: Obtem codigo do projeto
+        uses: actions/checkout@v4
+
       - name: Autenticar na AWS com Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -44,11 +47,6 @@ jobs:
 
       - name: Configurar o kubectl
         run: aws eks update-kubeconfig --name eks-developer
-
-      - name: List files in the k8s directory
-        run: |
-          echo "Listing files in the ./k8s directory:"
-          ls -l
 
       - name: Aplicar os manifestos (deploy) no Kubernetes
         uses: Azure/k8s-deploy@v5
