@@ -45,10 +45,15 @@ jobs:
       - name: Configurar o kubectl
         run: aws eks update-kubeconfig --name eks-developer
 
+      - name: List files in the k8s directory
+        run: |
+          echo "Listing files in the ./k8s directory:"
+          ls -l ./k8s
+
       - name: Aplicar os manifestos (deploy) no Kubernetes
         uses: Azure/k8s-deploy@v5
         with:
           manifests: |
-              ./fake-shop/k8s/deployment.yaml
+              ./k8s/deployment.yaml
           images: |
               tavarescruz/fake-shop:v${{ github.run_number }}
